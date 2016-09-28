@@ -1,0 +1,6 @@
+<sun-web-app>
+    <resource-ref>
+        <res-ref-name>jdbc/OracleDS</res-ref-name>
+        <jndi-name>jdbc/OracleDS</jndi-name>
+    </resource-ref>
+</sun-web-app>
