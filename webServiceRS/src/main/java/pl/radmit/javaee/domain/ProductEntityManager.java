@@ -10,19 +10,20 @@ import javax.persistence.Persistence;
 public class ProductEntityManager {
 
 
-
     public void addProduct() {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "myPU" );
-        EntityManager entitymanager = emfactory.createEntityManager( );
-        entitymanager.getTransaction( ).begin( );
+//        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("myPU");
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("statCreateTablesJTA");
 
-        Product prod = new Product( "Testowy");
+        EntityManager entitymanager = emfactory.createEntityManager();
+        entitymanager.getTransaction().begin();
 
-        entitymanager.persist( prod );
-        entitymanager.getTransaction( ).commit( );
+        Product prod = new Product("Testowy");
 
-        entitymanager.close( );
-        emfactory.close( );
+        entitymanager.persist(prod);
+        entitymanager.getTransaction().commit();
+
+        entitymanager.close();
+        emfactory.close();
     }
 
     public void getAllProducts() {

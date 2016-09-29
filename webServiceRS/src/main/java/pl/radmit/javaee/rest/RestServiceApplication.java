@@ -7,11 +7,7 @@ import pl.radmit.javaee.rest.product.response.Todo;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -40,7 +36,7 @@ public class RestServiceApplication {
 //    }
 
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Todo> getXML() {
         ProductEntityManager productEntityManager = new ProductEntityManager();
         productEntityManager.addProduct();
@@ -84,9 +80,21 @@ public class RestServiceApplication {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-            try { if (st != null) st.close(); } catch (SQLException e) { e.printStackTrace(); }
-            try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try {
+                if (rs != null) rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return lista;

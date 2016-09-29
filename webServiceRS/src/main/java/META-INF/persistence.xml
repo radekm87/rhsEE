@@ -2,12 +2,28 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
     <persistence-unit name="myPU" transaction-type="JTA">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
         <jta-data-source>jdbc/OracleDS</jta-data-source>
         <class>pl.radmit.javaee.domain.Product</class>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
+
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="statCreateTablesJTA" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>pl.radmit.javaee.domain.Product</class>
+
+        <properties>
+
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.1.25:1521:XE"/>
+            <property name="javax.persistence.jdbc.user" value="zamrazalnik"/>
+            <property name="javax.persistence.jdbc.password" value="zamrazalnik"/>
+
+            <property name="eclipselink.logging.level" value="FINEST"/>
 
         </properties>
     </persistence-unit>
