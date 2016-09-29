@@ -2,9 +2,14 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
     <persistence-unit name="myPU" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>jdbc/OracleDS</jta-data-source>
+        <class>pl.radmit.javaee.domain.Product</class>
+
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
-        <properties/>
+        <properties>
+
+        </properties>
     </persistence-unit>
 
 </persistence>

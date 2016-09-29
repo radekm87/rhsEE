@@ -1,5 +1,6 @@
 package pl.radmit.javaee.rest;
 
+import pl.radmit.javaee.domain.ProductEntityManager;
 import pl.radmit.javaee.rest.product.request.ProductPostRequest;
 import pl.radmit.javaee.rest.product.response.ProductResultResponse;
 import pl.radmit.javaee.rest.product.response.Todo;
@@ -41,6 +42,9 @@ public class RestServiceApplication {
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public List<Todo> getXML() {
+        ProductEntityManager productEntityManager = new ProductEntityManager();
+        productEntityManager.addProduct();
+
         Todo todo = new Todo();
         todo.setSummary("This is my first todo");
         todo.setDescription("This is my first todo");
@@ -92,10 +96,14 @@ public class RestServiceApplication {
     @Produces({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
     @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
     public ProductResultResponse addProduct(ProductPostRequest request) {
+        ProductEntityManager productEntityManager = new ProductEntityManager();
+        productEntityManager.addProduct();
+
         ProductResultResponse rr = new ProductResultResponse();
         rr.setId(1L);
         rr.setProductName(request.getProductName());
         return rr;
+
 //        Todo todo = new Todo();
 //        todo.setSummary("This is my first todo");
 //        todo.setDescription("This is my first todo");
