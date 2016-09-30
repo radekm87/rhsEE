@@ -68,14 +68,18 @@ public class RestServiceApplication {
             conn = ds.getConnection();
 
             st = conn.createStatement();
-            rs = st.executeQuery("SELECT * FROM employees");
+            rs = st.executeQuery("SELECT * FROM product");
 
             while (rs.next()) {
-                String id = rs.getString("id");
-                String firstName = rs.getString("first_name");
-                String lastName = rs.getString("last_name");
+                Long id = rs.getLong("id");
+                String firstName = rs.getString("name");
+
                 sb.append("ID: " + id + ", First Name: " + firstName
-                        + ", Last Name: " + lastName + "<br/>");
+                        + "<br/>");
+                Todo todo1 = new Todo();
+                todo1.setDescription(id.toString());
+                todo1.setSummary(firstName);
+                lista.add(todo1);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
