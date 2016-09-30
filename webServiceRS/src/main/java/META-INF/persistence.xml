@@ -1,8 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+<persistence version="2.0"
+             xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+    <persistence-unit name="example" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>jdbc/OracleDS</jta-data-source>
+        <class>pl.radmit.javaee.domain.Product</class>
+        <properties>
+            <!-- optional --><property name="eclipselink.target-database"
+                                       value="org.eclipse.persistence.platform.database.OraclePlatform"/>
+            <property name="eclipselink.target-server" value="Glassfish"/>
+            <property name="eclipselink.logging.level" value="FINEST"/>
+        </properties>
+    </persistence-unit>
 
     <persistence-unit name="myPU" transaction-type="JTA">
         <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
+        <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
         <jta-data-source>jdbc/OracleDS</jta-data-source>
         <class>pl.radmit.javaee.domain.Product</class>
 
@@ -17,14 +32,31 @@
         <class>pl.radmit.javaee.domain.Product</class>
 
         <properties>
-
             <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.1.25:1521:XE"/>
             <property name="javax.persistence.jdbc.user" value="zamrazalnik"/>
             <property name="javax.persistence.jdbc.password" value="zamrazalnik"/>
 
             <property name="eclipselink.logging.level" value="FINEST"/>
+        </properties>
+    </persistence-unit>
 
+    <persistence-unit name="customerManager" transaction-type="RESOURCE_LOCAL">
+        <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+        <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
+        <class>pl.radmit.javaee.domain.Product</class>
+        <properties>
+            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>-->
+            <!--<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
+            <!--<property name="hibernate.show_sql" value="true"/>-->
+            <!--<property name="hibernate.connection.username" value="root"/>-->
+            <!--<property name="hibernate.connection.password" value="1234"/>-->
+            <!--<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/general"/>-->
+            <!--<property name="hibernate.max_fetch_depth" value="3"/>-->
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.1.25:1521:XE"/>
+            <property name="javax.persistence.jdbc.user" value="zamrazalnik"/>
+            <property name="javax.persistence.jdbc.password" value="zamrazalnik"/>
         </properties>
     </persistence-unit>
 
