@@ -6,7 +6,14 @@ import pl.radmit.javaee.rest.product.response.ProductResultResponse;
 import pl.radmit.javaee.rest.product.response.Todo;
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.sql.DataSource;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.Connection;
@@ -25,6 +32,9 @@ import java.util.List;
 @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
 public class RestServiceApplication {
 
+    @PersistenceUnit(unitName = "example")
+    private EntityManagerFactory entityManagerFactory;
+
 //    @GET
 //    @Path("/{param}")
 //    public Response getMsg(@PathParam("param") String msg) {
@@ -39,7 +49,21 @@ public class RestServiceApplication {
     @Produces({MediaType.APPLICATION_JSON})
     public List<Todo> getXML() {
         ProductEntityManager productEntityManager = new ProductEntityManager();
-        productEntityManager.addProduct();
+        try {
+            productEntityManager.addProduct(entityManagerFactory);
+        } catch (NamingException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (javax.transaction.NotSupportedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
+            e.printStackTrace();
+        }
 
         Todo todo = new Todo();
         todo.setSummary("This is my first todo");
@@ -109,7 +133,7 @@ public class RestServiceApplication {
     @Consumes({MediaType.APPLICATION_JSON + ";charset=UTF-8"})
     public ProductResultResponse addProduct(ProductPostRequest request) {
         ProductEntityManager productEntityManager = new ProductEntityManager();
-        productEntityManager.addProduct();
+//        productEntityManager.addProduct(entityManagerFactory);
 
         ProductResultResponse rr = new ProductResultResponse();
         rr.setId(1L);

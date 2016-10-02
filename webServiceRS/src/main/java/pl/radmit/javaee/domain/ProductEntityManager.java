@@ -1,8 +1,11 @@
 package pl.radmit.javaee.domain;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.transaction.*;
 
 
 /**
@@ -10,29 +13,37 @@ import javax.persistence.Persistence;
  */
 public class ProductEntityManager {
 
+//    @PersistenceContext(unitName = "example")
+//    private EntityManager em;
 
-    public void addProduct() {
-//        UserTransaction transaction = (UserTransaction)new InitialContext().lookup("java:comp/UserTransaction");
-//        transaction.begin();
-//        EntityManager em = getEntityManager();
-//        Employee employee = em.find(Employee.class, id);
-//        employee.setSalary(employee.getSalary() + 1000);
-//        transaction.commit();
+    public void addProduct(EntityManagerFactory emfactory) throws NamingException, SystemException, NotSupportedException, HeuristicRollbackException, HeuristicMixedException, RollbackException {
+
+//        Server server = (Server) SessionManager.getManager().getSession("session");
+//        Session session = (Session) server.acquireClientSession();
+//        UnitOfWork uow = session.acquireUnitOfWork();
 
 
 //        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("myPU");
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("example");
+        emfactory = Persistence.createEntityManagerFactory("example");
 
         EntityManager entitymanager = emfactory.createEntityManager();
 //        entitymanager.getTransaction().begin();
 
+        UserTransaction transaction = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
+        transaction.begin();
         Product prod = new Product("Testowy");
 
+        entitymanager.joinTransaction();
         entitymanager.persist(prod);
+        entitymanager.flush();
 //        entitymanager.getTransaction().commit();
 
+        transaction.commit();
+
         entitymanager.close();
-        emfactory.close();
+//        emfactory.close();
+
+//        em.persist(prod);
     }
 
     public void getAllProducts() {
